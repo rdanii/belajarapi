@@ -92,6 +92,14 @@ class Service extends REST_Controller
                     $this->load->helper('user_helper');
                     $this->response(addStok($this->post('request')));
                     break;
+                case 'updateBerita':
+                    $this->load->helper('user_helper');
+                    $this->response(updateBerita($this->post('request')));
+                    break;
+                case 'deleteBerita':
+                    $this->load->helper('user_helper');
+                    $this->response(deleteBerita($this->post('request')));
+                    break;
                 default:
                     $this->response((object) array('responseCode' => '08', 'responseDesc' => 'Unknown Request Method[' . $datapost->requestMethod . ']', 'responseData' => array()), 404);
             }

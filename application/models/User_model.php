@@ -48,6 +48,29 @@ class User_model extends CI_Model
         return $belajar;
     }
 
+    function updateBerita($id, $judul, $isi, $jumlah)
+    {
+        $belajar = $this->load->database('belajar', TRUE);
+        $berita = array(
+            'judul' => $judul,
+            'isi' => $isi,
+            'jumlah' => $jumlah
+        );
+        $belajar->where('id', $id);
+        $belajar->update('tbl_berita', $berita);
+        $belajar->close();
+        return $belajar;
+    }
+
+    function deleteBerita($id)
+    {
+        $belajar = $this->load->database('belajar', TRUE);
+        $belajar->where('id', $id);
+        $belajar->delete('tbl_berita');
+        $belajar->close();
+        return $belajar;
+    }
+
     function addBarang($nama, $merk, $harga, $kategori, $jumlah)
     {
         $belajar = $this->load->database('belajar', TRUE);
@@ -140,7 +163,7 @@ class User_model extends CI_Model
     function getBerita()
     {
         $belajar = $this->load->database('belajar', TRUE);
-        $belajar->select('judul, isi, jumlah');
+        $belajar->select('id,judul,isi,jumlah');
         $qryget = $belajar->get('tbl_berita');
         $belajar->close();
         return $qryget;

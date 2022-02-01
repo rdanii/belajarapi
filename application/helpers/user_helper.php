@@ -47,6 +47,7 @@ function addBerita($request)
     return $result;
 }
 
+
 function addTabelBerita($request)
 {
     $result = new stdClass;
@@ -59,7 +60,7 @@ function addTabelBerita($request)
     $datapost = json_decode($request);
     try {
         if (!isset($datapost->judul)) {
-            throw new Exception("Parameter judul tidak valid");
+            throw new Exception("Parameter judul tidak ditemukan");
         }
         if ($datapost->judul == "") {
             throw new Exception("Judul tidak boleh kosong");
@@ -88,7 +89,100 @@ function addTabelBerita($request)
         }
 
         $result->responseCode = '00';
-        $result->responseDesc = 'Berhasil sdd Berita';
+        $result->responseDesc = 'Berhasil add Berita';
+    } catch (Exception $e) {
+        $result->responseCode = '99';
+        $result->responseDesc = $e->getMessage() . " Ln." . $e->getLine();
+    }
+
+    $CI->activity_model->insert_activity((isset($datapost->requestMethod) ? $CI->security->xss_clean(trim($datapost->requestMethod)) : '') . ' RESPONSE ', json_encode(array("responseCode" => $result->responseCode, "responseDesc" => $result->responseDesc)));
+    return $result;
+}
+
+function updateBerita($request)
+{
+    $result = new stdClass;
+    $result->responseCode = "";
+    $result->responseDesc = "";
+
+    $CI = &get_instance();
+    $CI->load->model('user_model');
+    $CI->load->model('activity_model');
+    $datapost = json_decode($request);
+    try {
+        if (!isset($datapost->id)) {
+            throw new Exception("Parameter id tidak ditemukan");
+        }
+        if ($datapost->id == "") {
+            throw new Exception("id tidak boleh kosong");
+        }
+        $id = $datapost->id;
+
+        if (!isset($datapost->judul)) {
+            throw new Exception("Parameter judul tidak ditemukan");
+        }
+        if ($datapost->judul == "") {
+            throw new Exception("Judul tidak boleh kosong");
+        }
+        $judul = $datapost->judul;
+
+        if (!isset($datapost->isi)) {
+            throw new Exception("Parameter isi tidak valid");
+        }
+        if ($datapost->isi == "") {
+            throw new Exception("Isi tidak boleh kosong");
+        }
+        $isi = $datapost->isi;
+
+        if (!isset($datapost->jumlah)) {
+            throw new Exception("Parameter jumlah tidak valid");
+        }
+        if ($datapost->jumlah == "") {
+            throw new Exception("Jumlah tidak boleh kosong");
+        }
+        $jumlah = $datapost->jumlah;
+
+        $resdata = $CI->user_model->updateBerita($id,$judul, $isi, $jumlah);
+        if (!$resdata) {
+            throw new Exception("Gagal update berita");
+        }
+
+        $result->responseCode = '00';
+        $result->responseDesc = 'Berhasil update Berita';
+    } catch (Exception $e) {
+        $result->responseCode = '99';
+        $result->responseDesc = $e->getMessage() . " Ln." . $e->getLine();
+    }
+
+    $CI->activity_model->insert_activity((isset($datapost->requestMethod) ? $CI->security->xss_clean(trim($datapost->requestMethod)) : '') . ' RESPONSE ', json_encode(array("responseCode" => $result->responseCode, "responseDesc" => $result->responseDesc)));
+    return $result;
+}
+function deleteBerita($request)
+{
+    $result = new stdClass;
+    $result->responseCode = "";
+    $result->responseDesc = "";
+
+    $CI = &get_instance();
+    $CI->load->model('user_model');
+    $CI->load->model('activity_model');
+    $datapost = json_decode($request);
+    try {
+        if (!isset($datapost->id)) {
+            throw new Exception("Parameter id tidak ditemukan");
+        }
+        if ($datapost->id == "") {
+            throw new Exception("id tidak boleh kosong");
+        }
+        $id = $datapost->id;
+
+        $resdata = $CI->user_model->deleteBerita($id);
+        if (!$resdata) {
+            throw new Exception("Gagal delete berita");
+        }
+
+        $result->responseCode = '00';
+        $result->responseDesc = 'Berhasil delete Berita';
     } catch (Exception $e) {
         $result->responseCode = '99';
         $result->responseDesc = $e->getMessage() . " Ln." . $e->getLine();
@@ -375,21 +469,20 @@ function getBerita($request)
     $CI->load->model('user_model');
     $datapost = json_decode($request);
     try {
-        $tbl_berita = $datapost->tbl_berita;
         if ($CI->libs_bearer->cekToken() == false) {
             throw new Exception("Access Forbidden");
         }
 
-        if (!isset($datapost->tbl_berita)) {
-            throw new Exception("Parameter tbl_berita tidak valid");
+        if (!isset($datapost->nama)) {
+            throw new Exception("Parameter nama tidak valid");
         }
 
-        $resdata = $CI->user_model->getBerita($tbl_berita);
+        $resdata = $CI->user_model->getBerita();
         if (!$resdata || $resdata->num_rows() == 0) {
             throw new Exception("Data tidak ditemukan.");
         }
         $result->responseCode = '00';
-        $result->responseDesc = 'Inquiry Sukses.';
+        $result->responseDesc = 'Get Data Berita Sukses.';
         $result->responseData = $resdata->result();
     } catch (Exception $e) {
         $result->responseCode = '99';
