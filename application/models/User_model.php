@@ -62,11 +62,102 @@ class User_model extends CI_Model
         return $belajar;
     }
 
+    function updateKategori($id, $kategori)
+    {
+        $belajar = $this->load->database('belajar', TRUE);
+        $kategori = array(
+            'kategori' => $kategori
+        );
+        $belajar->where('id', $id);
+        $belajar->update('tbl_kategori', $kategori);
+        $belajar->close();
+        return $belajar;
+    }
+
+    function updateMerk($id, $merk)
+    {
+        $belajar = $this->load->database('belajar', TRUE);
+        $merk = array(
+            'merk' => $merk
+        );
+        $belajar->where('id', $id);
+        $belajar->update('tbl_merk', $merk);
+        $belajar->close();
+        return $belajar;
+    }
+
+    function updateStok($id, $nama, $jumlah, $merk, $jenis)
+    {
+        $belajar = $this->load->database('belajar', TRUE);
+        $stok = array(
+            'nama_barang' => $nama,
+            'jumlah_barang' => $jumlah,
+            'merk' => $merk,
+            'jenis' => $jenis
+        );
+        $belajar->where('id', $id);
+        $belajar->update('tbl_stok', $stok);
+        $belajar->close();
+        return $belajar;
+    }
+
+    function updateBarang($id, $nama, $harga, $kategori, $jumlah, $merk)
+    {
+        $belajar = $this->load->database('belajar', TRUE);
+        $barang = array(
+            'nama_barang' => $nama,
+            'harga' => $harga,
+            'kategori' => $kategori,
+            'jumlah_barang' => $jumlah,
+            'merk' => $merk
+        );
+        $belajar->where('id', $id);
+        $belajar->update('tbl_barang', $barang);
+        $belajar->close();
+        return $belajar;
+    }
+
     function deleteBerita($id)
     {
         $belajar = $this->load->database('belajar', TRUE);
         $belajar->where('id', $id);
         $belajar->delete('tbl_berita');
+        $belajar->close();
+        return $belajar;
+    }
+
+    function deleteMerk($id)
+    {
+        $belajar = $this->load->database('belajar', TRUE);
+        $belajar->where('id', $id);
+        $belajar->delete('tbl_merk');
+        $belajar->close();
+        return $belajar;
+    }
+
+    function deleteStok($id)
+    {
+        $belajar = $this->load->database('belajar', TRUE);
+        $belajar->where('id', $id);
+        $belajar->delete('tbl_stok');
+        $belajar->close();
+        return $belajar;
+    }
+
+    function deleteBarang($id)
+    {
+        $belajar = $this->load->database('belajar', TRUE);
+        $belajar->where('id', $id);
+        $belajar->delete('tbl_barang');
+        $belajar->close();
+        return $belajar;
+    }
+
+    function deleteKategori($id)
+    {
+        $belajar = $this->load->database('belajar', TRUE);
+        $belajar->where('id', $id);
+        $belajar->delete('tbl_kategori');
         $belajar->close();
         return $belajar;
     }

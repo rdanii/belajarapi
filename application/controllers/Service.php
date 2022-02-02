@@ -100,6 +100,38 @@ class Service extends REST_Controller
                     $this->load->helper('user_helper');
                     $this->response(deleteBerita($this->post('request')));
                     break;
+                case 'updateKategori':
+                    $this->load->helper('user_helper');
+                    $this->response(updateKategori($this->post('request')));
+                    break;
+                case 'deleteKategori':
+                    $this->load->helper('user_helper');
+                    $this->response(deleteKategori($this->post('request')));
+                    break;
+                case 'updateBarang':
+                    $this->load->helper('user_helper');
+                    $this->response(updateBarang($this->post('request')));
+                    break;
+                case 'deleteBarang':
+                    $this->load->helper('user_helper');
+                    $this->response(deleteBarang($this->post('request')));
+                    break;
+                case 'updateMerk':
+                    $this->load->helper('user_helper');
+                    $this->response(updateMerk($this->post('request')));
+                    break;
+                case 'deleteMerk':
+                    $this->load->helper('user_helper');
+                    $this->response(deleteMerk($this->post('request')));
+                    break;
+                case 'updateStok':
+                    $this->load->helper('user_helper');
+                    $this->response(updateStok($this->post('request')));
+                    break;
+                case 'deleteStok':
+                    $this->load->helper('user_helper');
+                    $this->response(deleteStok($this->post('request')));
+                    break;
                 default:
                     $this->response((object) array('responseCode' => '08', 'responseDesc' => 'Unknown Request Method[' . $datapost->requestMethod . ']', 'responseData' => array()), 404);
             }

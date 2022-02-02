@@ -142,7 +142,7 @@ function updateBerita($request)
         }
         $jumlah = $datapost->jumlah;
 
-        $resdata = $CI->user_model->updateBerita($id,$judul, $isi, $jumlah);
+        $resdata = $CI->user_model->updateBerita($id, $judul, $isi, $jumlah);
         if (!$resdata) {
             throw new Exception("Gagal update berita");
         }
@@ -157,6 +157,235 @@ function updateBerita($request)
     $CI->activity_model->insert_activity((isset($datapost->requestMethod) ? $CI->security->xss_clean(trim($datapost->requestMethod)) : '') . ' RESPONSE ', json_encode(array("responseCode" => $result->responseCode, "responseDesc" => $result->responseDesc)));
     return $result;
 }
+
+function updateBarang($request)
+{
+    $result = new stdClass;
+    $result->responseCode = "";
+    $result->responseDesc = "";
+
+    $CI = &get_instance();
+    $CI->load->model('user_model');
+    $CI->load->model('activity_model');
+    $datapost = json_decode($request);
+    try {
+        if (!isset($datapost->id)) {
+            throw new Exception("Parameter id tidak ditemukan");
+        }
+        if ($datapost->id == "") {
+            throw new Exception("id tidak boleh kosong");
+        }
+        $id = $datapost->id;
+
+        if (!isset($datapost->nama)) {
+            throw new Exception("Parameter nama tidak ditemukan");
+        }
+        if ($datapost->nama == "") {
+            throw new Exception("nama tidak boleh kosong");
+        }
+        $nama = $datapost->nama;
+
+        if (!isset($datapost->harga)) {
+            throw new Exception("Parameter harga tidak valid");
+        }
+        if ($datapost->harga == "") {
+            throw new Exception("harga tidak boleh kosong");
+        }
+        $harga = $datapost->harga;
+
+        if (!isset($datapost->kategori)) {
+            throw new Exception("Parameter kategori tidak valid");
+        }
+        if ($datapost->kategori == "") {
+            throw new Exception("kategori tidak boleh kosong");
+        }
+        $kategori = $datapost->kategori;
+
+        if (!isset($datapost->jumlah)) {
+            throw new Exception("Parameter jumlah tidak valid");
+        }
+        if ($datapost->jumlah == "") {
+            throw new Exception("Jumlah tidak boleh kosong");
+        }
+        $jumlah = $datapost->jumlah;
+
+        if (!isset($datapost->merk)) {
+            throw new Exception("Parameter merk tidak valid");
+        }
+        if ($datapost->merk == "") {
+            throw new Exception("merk tidak boleh kosong");
+        }
+        $merk = $datapost->merk;
+
+        $resdata = $CI->user_model->updateBarang($id, $nama, $harga, $kategori, $jumlah, $merk);
+        if (!$resdata) {
+            throw new Exception("Gagal update Barang");
+        }
+
+        $result->responseCode = '00';
+        $result->responseDesc = 'Berhasil update Barang';
+    } catch (Exception $e) {
+        $result->responseCode = '99';
+        $result->responseDesc = $e->getMessage() . " Ln." . $e->getLine();
+    }
+
+    $CI->activity_model->insert_activity((isset($datapost->requestMethod) ? $CI->security->xss_clean(trim($datapost->requestMethod)) : '') . ' RESPONSE ', json_encode(array("responseCode" => $result->responseCode, "responseDesc" => $result->responseDesc)));
+    return $result;
+}
+
+function updateKategori($request)
+{
+    $result = new stdClass;
+    $result->responseCode = "";
+    $result->responseDesc = "";
+
+    $CI = &get_instance();
+    $CI->load->model('user_model');
+    $CI->load->model('activity_model');
+    $datapost = json_decode($request);
+    try {
+        if (!isset($datapost->id)) {
+            throw new Exception("Parameter id tidak ditemukan");
+        }
+        if ($datapost->id == "") {
+            throw new Exception("id tidak boleh kosong");
+        }
+        $id = $datapost->id;
+
+        if (!isset($datapost->kategori)) {
+            throw new Exception("Parameter kategori tidak ditemukan");
+        }
+        if ($datapost->kategori == "") {
+            throw new Exception("kategori tidak boleh kosong");
+        }
+        $kategori = $datapost->kategori;
+
+        $resdata = $CI->user_model->updateKategori($id, $kategori);
+        if (!$resdata) {
+            throw new Exception("Gagal update Kategori");
+        }
+
+        $result->responseCode = '00';
+        $result->responseDesc = 'Berhasil update Kategori';
+    } catch (Exception $e) {
+        $result->responseCode = '99';
+        $result->responseDesc = $e->getMessage() . " Ln." . $e->getLine();
+    }
+
+    $CI->activity_model->insert_activity((isset($datapost->requestMethod) ? $CI->security->xss_clean(trim($datapost->requestMethod)) : '') . ' RESPONSE ', json_encode(array("responseCode" => $result->responseCode, "responseDesc" => $result->responseDesc)));
+    return $result;
+}
+
+function updateMerk($request)
+{
+    $result = new stdClass;
+    $result->responseCode = "";
+    $result->responseDesc = "";
+
+    $CI = &get_instance();
+    $CI->load->model('user_model');
+    $CI->load->model('activity_model');
+    $datapost = json_decode($request);
+    try {
+        if (!isset($datapost->id)) {
+            throw new Exception("Parameter id tidak ditemukan");
+        }
+        if ($datapost->id == "") {
+            throw new Exception("id tidak boleh kosong");
+        }
+        $id = $datapost->id;
+
+        if (!isset($datapost->merk)) {
+            throw new Exception("Parameter merk tidak ditemukan");
+        }
+        if ($datapost->merk == "") {
+            throw new Exception("merk tidak boleh kosong");
+        }
+        $merk = $datapost->merk;
+
+        $resdata = $CI->user_model->updateMerk($id, $merk);
+        if (!$resdata) {
+            throw new Exception("Gagal update merk");
+        }
+
+        $result->responseCode = '00';
+        $result->responseDesc = 'Berhasil update merk';
+    } catch (Exception $e) {
+        $result->responseCode = '99';
+        $result->responseDesc = $e->getMessage() . " Ln." . $e->getLine();
+    }
+
+    $CI->activity_model->insert_activity((isset($datapost->requestMethod) ? $CI->security->xss_clean(trim($datapost->requestMethod)) : '') . ' RESPONSE ', json_encode(array("responseCode" => $result->responseCode, "responseDesc" => $result->responseDesc)));
+    return $result;
+}
+
+function updateStok($request)
+{
+    $result = new stdClass;
+    $result->responseCode = "";
+    $result->responseDesc = "";
+
+    $CI = &get_instance();
+    $CI->load->model('user_model');
+    $CI->load->model('activity_model');
+    $datapost = json_decode($request);
+    try {
+        if (!isset($datapost->id)) {
+            throw new Exception("Parameter id tidak ditemukan");
+        }
+        if ($datapost->id == "") {
+            throw new Exception("id tidak boleh kosong");
+        }
+        $id = $datapost->id;
+
+        if (!isset($datapost->nama)) {
+            throw new Exception("Parameter nama tidak ditemukan");
+        }
+        if ($datapost->nama == "") {
+            throw new Exception("nama tidak boleh kosong");
+        }
+        $nama = $datapost->nama;
+
+        if (!isset($datapost->jumlah)) {
+            throw new Exception("Parameter jumlah tidak ditemukan");
+        }
+        if ($datapost->jumlah == "") {
+            throw new Exception("jumlah tidak boleh kosong");
+        }
+        $jumlah = $datapost->jumlah;
+
+        if (!isset($datapost->merk)) {
+            throw new Exception("Parameter merk tidak ditemukan");
+        }
+        if ($datapost->merk == "") {
+            throw new Exception("merk tidak boleh kosong");
+        }
+        $merk = $datapost->merk;
+
+        if (!isset($datapost->jenis)) {
+            throw new Exception("Parameter jenis tidak ditemukan");
+        }
+        if ($datapost->jenis == "") {
+            throw new Exception("jenis tidak boleh kosong");
+        }
+        $jenis = $datapost->jenis;
+
+        $resdata = $CI->user_model->updateStok($id, $nama, $jumlah, $merk, $jenis);
+        if (!$resdata) {
+            throw new Exception("Gagal update stok");
+        }
+
+        $result->responseCode = '00';
+        $result->responseDesc = 'Berhasil update stok';
+    } catch (Exception $e) {
+        $result->responseCode = '99';
+        $result->responseDesc = $e->getMessage() . " Ln." . $e->getLine();
+    }
+
+    $CI->activity_model->insert_activity((isset($datapost->requestMethod) ? $CI->security->xss_clean(trim($datapost->requestMethod)) : '') . ' RESPONSE ', json_encode(array("responseCode" => $result->responseCode, "responseDesc" => $result->responseDesc)));
+    return $result;
+}
+
 function deleteBerita($request)
 {
     $result = new stdClass;
@@ -183,6 +412,146 @@ function deleteBerita($request)
 
         $result->responseCode = '00';
         $result->responseDesc = 'Berhasil delete Berita';
+    } catch (Exception $e) {
+        $result->responseCode = '99';
+        $result->responseDesc = $e->getMessage() . " Ln." . $e->getLine();
+    }
+
+    $CI->activity_model->insert_activity((isset($datapost->requestMethod) ? $CI->security->xss_clean(trim($datapost->requestMethod)) : '') . ' RESPONSE ', json_encode(array("responseCode" => $result->responseCode, "responseDesc" => $result->responseDesc)));
+    return $result;
+}
+
+function deleteBarang($request)
+{
+    $result = new stdClass;
+    $result->responseCode = "";
+    $result->responseDesc = "";
+
+    $CI = &get_instance();
+    $CI->load->model('user_model');
+    $CI->load->model('activity_model');
+    $datapost = json_decode($request);
+    try {
+        if (!isset($datapost->id)) {
+            throw new Exception("Parameter id tidak ditemukan");
+        }
+        if ($datapost->id == "") {
+            throw new Exception("id tidak boleh kosong");
+        }
+        $id = $datapost->id;
+
+        $resdata = $CI->user_model->deleteBarang($id);
+        if (!$resdata) {
+            throw new Exception("Gagal delete Barang");
+        }
+
+        $result->responseCode = '00';
+        $result->responseDesc = 'Berhasil delete Barang';
+    } catch (Exception $e) {
+        $result->responseCode = '99';
+        $result->responseDesc = $e->getMessage() . " Ln." . $e->getLine();
+    }
+
+    $CI->activity_model->insert_activity((isset($datapost->requestMethod) ? $CI->security->xss_clean(trim($datapost->requestMethod)) : '') . ' RESPONSE ', json_encode(array("responseCode" => $result->responseCode, "responseDesc" => $result->responseDesc)));
+    return $result;
+}
+
+function deleteKategori($request)
+{
+    $result = new stdClass;
+    $result->responseCode = "";
+    $result->responseDesc = "";
+
+    $CI = &get_instance();
+    $CI->load->model('user_model');
+    $CI->load->model('activity_model');
+    $datapost = json_decode($request);
+    try {
+        if (!isset($datapost->id)) {
+            throw new Exception("Parameter id tidak ditemukan");
+        }
+        if ($datapost->id == "") {
+            throw new Exception("id tidak boleh kosong");
+        }
+        $id = $datapost->id;
+
+        $resdata = $CI->user_model->deleteKategori($id);
+        if (!$resdata) {
+            throw new Exception("Gagal delete Kategori");
+        }
+
+        $result->responseCode = '00';
+        $result->responseDesc = 'Berhasil delete Kategori';
+    } catch (Exception $e) {
+        $result->responseCode = '99';
+        $result->responseDesc = $e->getMessage() . " Ln." . $e->getLine();
+    }
+
+    $CI->activity_model->insert_activity((isset($datapost->requestMethod) ? $CI->security->xss_clean(trim($datapost->requestMethod)) : '') . ' RESPONSE ', json_encode(array("responseCode" => $result->responseCode, "responseDesc" => $result->responseDesc)));
+    return $result;
+}
+
+function deleteStok($request)
+{
+    $result = new stdClass;
+    $result->responseCode = "";
+    $result->responseDesc = "";
+
+    $CI = &get_instance();
+    $CI->load->model('user_model');
+    $CI->load->model('activity_model');
+    $datapost = json_decode($request);
+    try {
+        if (!isset($datapost->id)) {
+            throw new Exception("Parameter id tidak ditemukan");
+        }
+        if ($datapost->id == "") {
+            throw new Exception("id tidak boleh kosong");
+        }
+        $id = $datapost->id;
+
+        $resdata = $CI->user_model->deleteStok($id);
+        if (!$resdata) {
+            throw new Exception("Gagal delete stok");
+        }
+
+        $result->responseCode = '00';
+        $result->responseDesc = 'Berhasil delete stok';
+    } catch (Exception $e) {
+        $result->responseCode = '99';
+        $result->responseDesc = $e->getMessage() . " Ln." . $e->getLine();
+    }
+
+    $CI->activity_model->insert_activity((isset($datapost->requestMethod) ? $CI->security->xss_clean(trim($datapost->requestMethod)) : '') . ' RESPONSE ', json_encode(array("responseCode" => $result->responseCode, "responseDesc" => $result->responseDesc)));
+    return $result;
+}
+
+function deleteMerk($request)
+{
+    $result = new stdClass;
+    $result->responseCode = "";
+    $result->responseDesc = "";
+
+    $CI = &get_instance();
+    $CI->load->model('user_model');
+    $CI->load->model('activity_model');
+    $datapost = json_decode($request);
+    try {
+        if (!isset($datapost->id)) {
+            throw new Exception("Parameter id tidak ditemukan");
+        }
+        if ($datapost->id == "") {
+            throw new Exception("id tidak boleh kosong");
+        }
+        $id = $datapost->id;
+
+        $resdata = $CI->user_model->deleteMerk($id);
+        if (!$resdata) {
+            throw new Exception("Gagal delete merk");
+        }
+
+        $result->responseCode = '00';
+        $result->responseDesc = 'Berhasil delete merk';
     } catch (Exception $e) {
         $result->responseCode = '99';
         $result->responseDesc = $e->getMessage() . " Ln." . $e->getLine();
